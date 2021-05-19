@@ -9,13 +9,17 @@ import java.util.List;
 @Service
 public class CredentialsService {
     private final CredentialsRepository credentialsRepository;
+    private final EncryptionService encryptionService;
 
-    public CredentialsService(CredentialsRepository credentialsRepository) {
+    public CredentialsService(CredentialsRepository credentialsRepository, EncryptionService encryptionService) {
         this.credentialsRepository = credentialsRepository;
+        this.encryptionService = encryptionService;
     }
 
     public List<Credential> getCredentials() {
-        return credentialsRepository.findAll();
+        List<Credential> credentialList = credentialsRepository.findAll();
+        credentialList.forEach(credential -> credential.setPassword(encryptionService.decryptValue(credential.getPassword(), credential.getKey())));
+        return credentialList;
     }
 
     public Credential insertCredentials(Credential credential) {
