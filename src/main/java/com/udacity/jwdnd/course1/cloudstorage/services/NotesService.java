@@ -1,32 +1,32 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
-import com.udacity.jwdnd.course1.cloudstorage.mappers.NotesMappeer;
+import com.udacity.jwdnd.course1.cloudstorage.mappers.NotesMapper;
 import com.udacity.jwdnd.course1.cloudstorage.models.Note;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class NotesService {
-    private final NotesMappeer notesMappeer;
+    private final NotesMapper notesMapper;
 
-    public NotesService(NotesMappeer notesMappeer) {
-        this.notesMappeer = notesMappeer;
+    public NotesService(NotesMapper notesMapper) {
+        this.notesMapper = notesMapper;
     }
 
     public Note insertNote(Note note) {
-        return notesMappeer.save(note);
+        return notesMapper.save(note);
     }
 
     public List<Note> getNotes() {
-        return notesMappeer.findALlByOrderByNoteIdAsc();
+        return notesMapper.findALlByOrderByNoteIdAsc();
     }
 
     public List<Note> findAllByNoteTitle(String noteTitle){
-        return notesMappeer.findALlByNoteTitleOrderByNoteIdAsc(noteTitle);
+        return notesMapper.findALlByNoteTitleOrderByNoteIdAsc(noteTitle);
     }
 
     public void delete(int noteId) {
-        Note note = notesMappeer.findNoteByNoteId(noteId);
-        notesMappeer.delete(note);
+        Note note = notesMapper.findNoteByNoteId(noteId);
+        notesMapper.delete(note.getNoteId());
     }
 }

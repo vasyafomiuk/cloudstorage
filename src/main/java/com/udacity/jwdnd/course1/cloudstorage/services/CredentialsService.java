@@ -28,7 +28,7 @@ public class CredentialsService {
 
     public void delete(int credentialId) {
         Credential credential = credentialsMapper.findCredentialByCredentialId(credentialId);
-        credentialsMapper.delete(credential);
+        credentialsMapper.delete(credential.getCredentialId());
     }
 
     public List<Credential> getCredentials(String username) {

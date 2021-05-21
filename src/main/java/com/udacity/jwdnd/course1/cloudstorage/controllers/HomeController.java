@@ -27,6 +27,7 @@ public class HomeController {
 
     @GetMapping("/home")
     public String getHome(CredentialsForm credentialsForm, NoteForm noteForm, Model model) {
+        logger.info(notesService.getNotes().toString());
         model.addAttribute("credentialsForm", new CredentialsForm());
         model.addAttribute("noteForm", new NoteForm());
         model.addAttribute("fileForm", new FileForm());

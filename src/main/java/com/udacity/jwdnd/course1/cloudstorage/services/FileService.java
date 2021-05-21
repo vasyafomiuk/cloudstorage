@@ -28,7 +28,7 @@ public class FileService {
 
     public void delete(int fileId) {
         File file = getFile(fileId);
-        fileMapper.delete(file);
+        fileMapper.delete(file.getFileId());
     }
 
     public List<File> findFiles(String fileName) {
