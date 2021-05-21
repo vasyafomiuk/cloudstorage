@@ -69,7 +69,7 @@ public interface FileMapper {
     })
     List<File> findFileByFileName(String fileName);
 
-    @Delete("DELETE FROM files WHERE fileId = #{fileId}")
+    @Delete("DELETE FROM files WHERE file_id = #{fileId}")
     @Results(value = {
             @Result(column = "file_id", property = "fileId", id = true),
             @Result(column = "file_name", property = "fileName"),
