@@ -14,7 +14,7 @@ public class FileService {
         this.fileMapper = fileMapper;
     }
 
-    public File insertFile(File file) {
+    public int insertFile(File file) {
         return fileMapper.save(file);
     }
 

@@ -1,9 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -14,6 +11,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "files")
+@ToString
 public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -17,8 +17,8 @@ import static com.udacity.jwdnd.course1.cloudstorage.consts.ErrorMessages.*;
 
 @Controller
 public class SignUpController {
-    private Logger logger = LoggerFactory.getLogger(SignUpController.class);
-    private UserService userService;
+    private final Logger logger = LoggerFactory.getLogger(SignUpController.class);
+    private final UserService userService;
 
     public SignUpController(UserService userService) {
         this.userService = userService;

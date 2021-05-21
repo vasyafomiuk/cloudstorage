@@ -54,8 +54,12 @@ public class CredentialsController {
         credential.setUsername(credentialsForm.getUsername());
         credential.setUrl(credentialsForm.getUrl());
         credential.setUserId(user.getUserId());
-        credential.setCredentialId(credentialsForm.getCredentialId());
-        credentialsService.insertCredentials(credential);
+        if (credentialsForm.getCredentialId() == null) {
+            credentialsService.insertCredentials(credential);
+        } else {
+            credential.setCredentialId(credentialsForm.getCredentialId());
+            credentialsService.updateCredentials(credential);
+        }
         redirAttrs.addFlashAttribute("success", "Credentials created! Use this key to decrypt password: " + key);
         return "redirect:/home";
     }

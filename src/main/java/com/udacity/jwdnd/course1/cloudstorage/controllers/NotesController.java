@@ -41,8 +41,12 @@ public class NotesController {
         note.setNoteTitle(noteForm.getNoteTitle());
         note.setNoteDescription(noteForm.getNoteDescription());
         note.setUserId(user.getUserId());
-        note.setNoteId(noteForm.getNoteId());
-        notesService.insertNote(note);
+        if (noteForm.getNoteId() == null) {
+            notesService.insertNote(note);
+        } else {
+            note.setNoteId(noteForm.getNoteId());
+            notesService.updateNote(note);
+        }
         model.addAttribute("showNotes", true);
         return "redirect:/home";
     }

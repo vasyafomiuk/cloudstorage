@@ -21,5 +21,5 @@ public class Note {
     @Column(name = "note_description")
     private String noteDescription;
     @Column(name = "user_id")
-    private int userId;
+    private Integer userId;
 }

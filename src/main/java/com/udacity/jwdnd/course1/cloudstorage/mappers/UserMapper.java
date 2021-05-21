@@ -24,9 +24,10 @@ public interface UserMapper {
     })
     List<User> findAll();
 
-    @Insert("INSERT INTO users (username, salt, password, first_name, last_name) VALUES ('#{username}', '#{salt}', '#{password}', '#{firstName}', '#{lastName}')")
+    @Insert("INSERT INTO users (username, salt, password, first_name, last_name) " +
+            "VALUES (#{username}, #{salt}, #{password}, #{firstName}, #{lastName})")
     @Options(useGeneratedKeys = true, keyColumn = "user_id")
-    User save(User user);
+    int save(User user);
 
     @Delete("DELETE FROM users WHERE user_id = #{userId}")
     @Options(keyColumn = "user_id")

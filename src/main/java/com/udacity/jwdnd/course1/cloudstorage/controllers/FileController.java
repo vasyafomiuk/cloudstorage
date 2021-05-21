@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
@@ -27,7 +26,7 @@ import java.util.Objects;
 @Controller
 public class FileController {
     private final Logger logger = LoggerFactory.getLogger(HashService.class);
-    private FileService fileService;
+    private final FileService fileService;
 
     public FileController(FileService fileService) {
         this.fileService = fileService;
@@ -44,7 +43,6 @@ public class FileController {
         }
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         if (fileService.findFiles(fileName).size() > 0) {
-            logger.info("file already exist " + fileName);
             attributes.addFlashAttribute("error", "File name not allowed.");
             return "redirect:/home";
         }
@@ -56,7 +54,6 @@ public class FileController {
         file.setUserId(user.getUserId());
         fileService.insertFile(file);
         attributes.addFlashAttribute("success", "You successfully uploaded " + fileName + " file!");
-        logger.info("File uploaded!");
         return "redirect:/home";
     }
 

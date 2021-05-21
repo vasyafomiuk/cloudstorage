@@ -22,8 +22,12 @@ public class CredentialsService {
         return credentialList;
     }
 
-    public Credential insertCredentials(Credential credential) {
+    public int insertCredentials(Credential credential) {
         return credentialsMapper.save(credential);
+    }
+
+    public void updateCredentials(Credential credential) {
+        credentialsMapper.update(credential);
     }
 
     public void delete(int credentialId) {

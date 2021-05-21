@@ -10,40 +10,52 @@ import java.util.List;
 public interface NotesMapper {
 
     @Insert("INSERT INTO notes (note_title, note_description, user_id)" +
-            "VALUES ('#{noteTitle}', #{noteDescription}, #{'userId'})")
+            "VALUES (#{noteTitle}, #{noteDescription}, #{userId})")
     @Results(value = {
             @Result(column = "note_id", property = "noteId", id = true),
-            @Result(column = "user_title", property = "userTitle"),
-            @Result(column = "user_description", property = "userDescription"),
+            @Result(column = "note_title", property = "noteTitle"),
+            @Result(column = "note_description", property = "noteDescription"),
             @Result(column = "user_id", property = "userId")
     })
-    Note save(Note note);
+    @Options(useGeneratedKeys = true, keyColumn = "note_id")
+    int save(Note note);
 
-    @Select("SELECT * FROM notes ORDER BY note_id ASC")
+    @Update("UPDATE notes " +
+            "SET note_title = #{noteTitle}, " +
+            "note_description = #{noteDescription}, " +
+            "user_id = #{userId}" +
+            "WHERE note_id = #{noteId}")
+    @Results(value = {
+            @Result(column = "note_id", property = "noteId", id = true),
+            @Result(column = "note_title", property = "noteTitle"),
+            @Result(column = "note_description", property = "noteDescription"),
+            @Result(column = "user_id", property = "userId")
+    })
+    void update(Note note);
+
+    @Select("SELECT * FROM notes")
     @Results(id = "notes", value = {
             @Result(column = "note_id", property = "noteId", id = true),
-            @Result(column = "user_title", property = "userTitle"),
-            @Result(column = "user_description", property = "userDescription"),
+            @Result(column = "note_title", property = "noteTitle"),
+            @Result(column = "note_description", property = "noteDescription"),
             @Result(column = "user_id", property = "userId")
     })
-    @Flush
     List<Note> findALlByOrderByNoteIdAsc();
 
     @Select("SELECT * FROM notes WHERE note_title = #{noteTitle}")
     @Results(value = {
             @Result(column = "note_id", property = "noteId", id = true),
-            @Result(column = "user_title", property = "userTitle"),
-            @Result(column = "user_description", property = "userDescription"),
+            @Result(column = "note_title", property = "noteTitle"),
+            @Result(column = "note_description", property = "noteDescription"),
             @Result(column = "user_id", property = "userId")
     })
-    @Flush
     List<Note> findALlByNoteTitleOrderByNoteIdAsc(String noteTitle);
 
     @Select("SELECT * FROM notes WHERE note_id = #{noteId}")
     @Results(value = {
             @Result(column = "note_id", property = "noteId", id = true),
-            @Result(column = "user_title", property = "userTitle"),
-            @Result(column = "user_description", property = "userDescription"),
+            @Result(column = "note_title", property = "noteTitle"),
+            @Result(column = "note_description", property = "noteDescription"),
             @Result(column = "user_id", property = "userId")
     })
     Note findNoteByNoteId(int noteId);
@@ -51,8 +63,8 @@ public interface NotesMapper {
     @Delete("DELETE FROM notes WHERE note_id = #{noteId}")
     @Results(value = {
             @Result(column = "note_id", property = "noteId", id = true),
-            @Result(column = "user_title", property = "userTitle"),
-            @Result(column = "user_description", property = "userDescription"),
+            @Result(column = "note_title", property = "noteTitle"),
+            @Result(column = "note_description", property = "noteDescription"),
             @Result(column = "user_id", property = "userId")
     })
     int delete(int noteId);
