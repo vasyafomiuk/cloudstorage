@@ -1,6 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
-import com.udacity.jwdnd.course1.cloudstorage.repository.FileRepository;
+import com.udacity.jwdnd.course1.cloudstorage.mappers.FileMapper;
 import com.udacity.jwdnd.course1.cloudstorage.models.File;
 import org.springframework.stereotype.Service;
 
@@ -8,30 +8,30 @@ import java.util.List;
 
 @Service
 public class FileService {
-    private final FileRepository fileRepository;
+    private final FileMapper fileMapper;
 
-    public FileService(FileRepository fileRepository) {
-        this.fileRepository = fileRepository;
+    public FileService(FileMapper fileMapper) {
+        this.fileMapper = fileMapper;
     }
 
     public File insertFile(File file) {
-        return fileRepository.save(file);
+        return fileMapper.save(file);
     }
 
     public List<File> getFiles() {
-        return fileRepository.findAll();
+        return fileMapper.findAll();
     }
 
     public File getFile(int fileId) {
-        return fileRepository.findFileByFileId(fileId);
+        return fileMapper.findFileByFileId(fileId);
     }
 
     public void delete(int fileId) {
         File file = getFile(fileId);
-        fileRepository.delete(file);
+        fileMapper.delete(file);
     }
 
     public List<File> findFiles(String fileName) {
-        return fileRepository.findFileByFileName(fileName);
+        return fileMapper.findFileByFileName(fileName);
     }
 }

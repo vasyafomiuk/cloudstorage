@@ -1,13 +1,11 @@
-package com.udacity.jwdnd.course1.cloudstorage.repository;
+package com.udacity.jwdnd.course1.cloudstorage.mappers;
 
 import com.udacity.jwdnd.course1.cloudstorage.models.Credential;
-import org.apache.ibatis.annotations.*;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface CredentialsRepository extends CrudRepository<Credential, Long> {
+public interface CredentialsMapper extends CrudRepository<Credential, Long> {
     Credential save(Credential credential);
 
     Credential findByCredentialId(int credentialId);

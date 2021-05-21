@@ -1,6 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
-import com.udacity.jwdnd.course1.cloudstorage.repository.CredentialsRepository;
+import com.udacity.jwdnd.course1.cloudstorage.mappers.CredentialsMapper;
 import com.udacity.jwdnd.course1.cloudstorage.models.Credential;
 import org.springframework.stereotype.Service;
 
@@ -8,30 +8,30 @@ import java.util.List;
 
 @Service
 public class CredentialsService {
-    private final CredentialsRepository credentialsRepository;
+    private final CredentialsMapper credentialsMapper;
     private final EncryptionService encryptionService;
 
-    public CredentialsService(CredentialsRepository credentialsRepository, EncryptionService encryptionService) {
-        this.credentialsRepository = credentialsRepository;
+    public CredentialsService(CredentialsMapper credentialsMapper, EncryptionService encryptionService) {
+        this.credentialsMapper = credentialsMapper;
         this.encryptionService = encryptionService;
     }
 
     public List<Credential> getCredentials() {
-        List<Credential> credentialList = credentialsRepository.findAll();
+        List<Credential> credentialList = credentialsMapper.findAll();
         credentialList.forEach(credential -> credential.setPassword(encryptionService.decryptValue(credential.getPassword(), credential.getKey())));
         return credentialList;
     }
 
     public Credential insertCredentials(Credential credential) {
-        return credentialsRepository.save(credential);
+        return credentialsMapper.save(credential);
     }
 
     public void delete(int credentialId) {
-        Credential credential = credentialsRepository.findCredentialByCredentialId(credentialId);
-        credentialsRepository.delete(credential);
+        Credential credential = credentialsMapper.findCredentialByCredentialId(credentialId);
+        credentialsMapper.delete(credential);
     }
 
     public List<Credential> getCredentials(String username) {
-        return credentialsRepository.findAllByUsername(username);
+        return credentialsMapper.findAllByUsername(username);
     }
 }

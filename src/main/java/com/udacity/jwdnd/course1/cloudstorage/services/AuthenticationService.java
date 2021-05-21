@@ -1,6 +1,6 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
-import com.udacity.jwdnd.course1.cloudstorage.repository.UserRepository;
+import com.udacity.jwdnd.course1.cloudstorage.mappers.UserMapper;
 import com.udacity.jwdnd.course1.cloudstorage.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,11 +16,11 @@ import java.util.Objects;
 @Service
 public class AuthenticationService implements AuthenticationProvider {
     private final Logger logger = LoggerFactory.getLogger(HashService.class);
-    private final UserRepository userRepository;
+    private final UserMapper userMapper;
     private final HashService hashService;
 
-    public AuthenticationService(UserRepository userRepository, HashService hashService) {
-        this.userRepository = userRepository;
+    public AuthenticationService(UserMapper userMapper, HashService hashService) {
+        this.userMapper = userMapper;
         this.hashService = hashService;
     }
 
@@ -29,7 +29,7 @@ public class AuthenticationService implements AuthenticationProvider {
         String username = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        User user = userRepository.findUserByUsername(username);
+        User user = userMapper.findUserByUsername(username);
         logger.info("AuthenticationService ----- " + user);
         if (Objects.nonNull(user)) {
             String encodedSalt = user.getSalt();

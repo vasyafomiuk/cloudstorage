@@ -1,12 +1,11 @@
-package com.udacity.jwdnd.course1.cloudstorage.repository;
+package com.udacity.jwdnd.course1.cloudstorage.mappers;
 
 import com.udacity.jwdnd.course1.cloudstorage.models.File;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface FileRepository extends CrudRepository<File, Long> {
+public interface FileMapper extends CrudRepository<File, Long> {
 
     File save(File file);
 

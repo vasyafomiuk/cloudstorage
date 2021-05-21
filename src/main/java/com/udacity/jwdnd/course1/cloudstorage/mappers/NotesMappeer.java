@@ -1,11 +1,11 @@
-package com.udacity.jwdnd.course1.cloudstorage.repository;
+package com.udacity.jwdnd.course1.cloudstorage.mappers;
 
 import com.udacity.jwdnd.course1.cloudstorage.models.Note;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 
-public interface NotesRepository extends CrudRepository<Note, Long> {
+public interface NotesMappeer extends CrudRepository<Note, Long> {
 
     Note save(Note note);
 
