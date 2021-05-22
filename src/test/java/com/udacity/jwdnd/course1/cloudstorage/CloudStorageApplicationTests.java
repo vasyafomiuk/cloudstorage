@@ -72,7 +72,7 @@ class CloudStorageApplicationTests {
     @Test
     @Order(0)
     @DisplayName("Signs up a new user, logs in, verifies that the home page is accessible, logs out, and verifies that the home page is no longer accessible.")
-    public void signUpAndLogout() throws InterruptedException {
+    public void asignUpAndLogout() throws InterruptedException {
         String firstName = "Mark";
         String lastName = "Twen";
         String username = "mtwen";

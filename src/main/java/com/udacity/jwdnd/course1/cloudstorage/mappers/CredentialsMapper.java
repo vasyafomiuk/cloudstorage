@@ -2,8 +2,6 @@ package com.udacity.jwdnd.course1.cloudstorage.mappers;
 
 import com.udacity.jwdnd.course1.cloudstorage.models.Credential;
 import org.apache.ibatis.annotations.*;
-import org.springframework.data.repository.CrudRepository;
-
 import java.util.List;
 
 @Mapper
