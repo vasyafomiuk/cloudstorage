@@ -6,9 +6,11 @@ import com.udacity.jwdnd.course1.cloudstorage.models.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.HashService;
 import lombok.Getter;
+import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +19,10 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.SQLException;
 import java.util.Objects;
 
 @Controller
@@ -58,8 +60,10 @@ public class FileController {
     }
 
     @GetMapping("/files/{fileId}/delete")
-    public String deleteFile(@PathVariable int fileId) {
+    public String deleteFile(@PathVariable int fileId,
+                             RedirectAttributes redirectAttributes) {
         fileService.delete(fileId);
+        redirectAttributes.addFlashAttribute("success", "You successfully deleted a file!");
         return "redirect:/home";
     }
 

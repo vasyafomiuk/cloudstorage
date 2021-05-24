@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class NotesController {
@@ -30,6 +31,7 @@ public class NotesController {
     public String getNotes(@ModelAttribute("noteForm") NoteForm noteForm,
                            Model model,
                            @AuthenticationPrincipal User user,
+                           RedirectAttributes redirectAttributes,
                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             logger.error("There was a error " + bindingResult);
@@ -37,6 +39,14 @@ public class NotesController {
         }
         model.addAttribute("noteForm", new NoteForm());
         model.addAttribute("credentialsForm", new CredentialsForm());
+        if (noteForm.getNoteTitle() != null && noteForm.getNoteTitle().length() > 1000) {
+            redirectAttributes.addFlashAttribute("error", "Note's title cannot exceed 1000 chars!");
+            return "home";
+        }
+        if (noteForm.getNoteDescription() != null && noteForm.getNoteDescription().length() > 1000) {
+            redirectAttributes.addFlashAttribute("error", "Note's description cannot exceed 1000 chars!");
+            return "home";
+        }
         Note note = new Note();
         note.setNoteTitle(noteForm.getNoteTitle());
         note.setNoteDescription(noteForm.getNoteDescription());
@@ -47,13 +57,16 @@ public class NotesController {
             note.setNoteId(noteForm.getNoteId());
             notesService.updateNote(note);
         }
-        model.addAttribute("showNotes", true);
+        redirectAttributes.addFlashAttribute("showNotes", true);
+        redirectAttributes.addFlashAttribute("success", "Notes created!");
         return "redirect:/home";
     }
 
     @GetMapping("/notes/{noteId}/delete")
-    public String deleteNote(@PathVariable int noteId, ModelAndView modelAndView) {
+    public String deleteNote(@PathVariable int noteId,
+                             RedirectAttributes redirectAttributes) {
         notesService.delete(noteId);
+        redirectAttributes.addFlashAttribute("success", "You successfully deleted notes!");
         return "redirect:/home";
     }
 

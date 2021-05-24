@@ -34,12 +34,12 @@ public interface CredentialsMapper {
     })
     Credential findByCredentialId(int credentialId);
 
-    @Select("SELECT * FROM credentials")
+    @Select("SELECT * FROM credentials WHERE user_id = #{userId}")
     @Results(value = {
             @Result(column = "credential_id", property = "credentialId", id = true),
             @Result(column = "user_id", property = "userId")
     })
-    List<Credential> findAll();
+    List<Credential> findAll(int userId);
 
     @Select("SELECT * FROM credentials WHERE username = #{username}")
     @Results(value = {

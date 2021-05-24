@@ -44,6 +44,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 invalidateHttpSession(false).
                 deleteCookies("remove");
 
+        http.sessionManagement().
+                maximumSessions(3600).
+                and().
+                invalidSessionUrl("/login");
+
         http.csrf().disable();
         http.headers().frameOptions().disable();
     }

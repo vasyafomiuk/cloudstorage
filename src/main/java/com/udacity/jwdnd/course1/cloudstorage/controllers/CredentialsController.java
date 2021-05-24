@@ -60,13 +60,15 @@ public class CredentialsController {
             credential.setCredentialId(credentialsForm.getCredentialId());
             credentialsService.updateCredentials(credential);
         }
-        redirAttrs.addFlashAttribute("success", "Credentials created! Use this key to decrypt password: " + key);
+        redirAttrs.addFlashAttribute("success", "Credentials successfully saved!");
         return "redirect:/home";
     }
 
     @GetMapping("/credentials/{credentialId}/delete")
-    public String deleteCredentials(@PathVariable int credentialId) {
+    public String deleteCredentials(@PathVariable int credentialId,
+                                    RedirectAttributes redirectAttributes) {
         credentialsService.delete(credentialId);
+        redirectAttributes.addFlashAttribute("success", "You successfully deleted credentials!");
         return "redirect:/home";
     }
 }

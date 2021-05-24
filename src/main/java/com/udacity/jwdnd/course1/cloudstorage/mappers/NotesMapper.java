@@ -33,14 +33,14 @@ public interface NotesMapper {
     })
     void update(Note note);
 
-    @Select("SELECT * FROM notes")
+    @Select("SELECT * FROM notes WHERE user_id = #{userId} ORDER BY note_id ASC")
     @Results(id = "notes", value = {
             @Result(column = "note_id", property = "noteId", id = true),
             @Result(column = "note_title", property = "noteTitle"),
             @Result(column = "note_description", property = "noteDescription"),
             @Result(column = "user_id", property = "userId")
     })
-    List<Note> findALlByOrderByNoteIdAsc();
+    List<Note> findALlByOrderByNoteIdAsc(int userId);
 
     @Select("SELECT * FROM notes WHERE note_title = #{noteTitle}")
     @Results(value = {

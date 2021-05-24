@@ -16,8 +16,8 @@ public class CredentialsService {
         this.encryptionService = encryptionService;
     }
 
-    public List<Credential> getCredentials() {
-        List<Credential> credentialList = credentialsMapper.findAll();
+    public List<Credential> getCredentials(int userId) {
+        List<Credential> credentialList = credentialsMapper.findAll(userId);
         credentialList.forEach(credential -> credential.setPassword(encryptionService.decryptValue(credential.getPassword(), credential.getKey())));
         return credentialList;
     }

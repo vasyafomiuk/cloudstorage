@@ -18,8 +18,8 @@ public class FileService {
         return fileMapper.save(file);
     }
 
-    public List<File> getFiles() {
-        return fileMapper.findAll();
+    public List<File> getFiles(int userId) {
+        return fileMapper.findAll(userId);
     }
 
     public File getFile(int fileId) {

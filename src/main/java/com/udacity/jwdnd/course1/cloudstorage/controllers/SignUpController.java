@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import static com.udacity.jwdnd.course1.cloudstorage.consts.ErrorMessages.*;
 
@@ -31,7 +32,9 @@ public class SignUpController {
     }
 
     @PostMapping("/signup")
-    public String postSignUp(@ModelAttribute("signupForm") SignUpForm signupForm, Model model) {
+    public String postSignUp(@ModelAttribute("signupForm") SignUpForm signupForm,
+                             RedirectAttributes redirectAttributes,
+                             Model model) {
         model.addAttribute("signupForm", new SignUpForm());
         if (signupForm.getUsername() == null) {
             return "home";
@@ -45,8 +48,8 @@ public class SignUpController {
             model.addAttribute("signupError", String.format(USERNAME_ALREADY_EXIST, signupForm.getUsername()));
             return "signup";
         }
-        model.addAttribute("signupSuccess", true);
+        redirectAttributes.addFlashAttribute("signupSuccess", true);
         userService.createUser(user);
-        return "signup";
+        return "redirect:/login";
     }
 }

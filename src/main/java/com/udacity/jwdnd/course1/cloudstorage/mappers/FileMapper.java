@@ -36,7 +36,7 @@ public interface FileMapper {
     @Options(useGeneratedKeys = true, keyColumn = "file_id")
     int save(File file);
 
-    @Select("SELECT * FROM files")
+    @Select("SELECT * FROM files WHERE user_id = #{userId}")
     @Results(value = {
             @Result(column = "file_id", property = "fileId", id = true),
             @Result(column = "file_name", property = "fileName"),
@@ -45,7 +45,7 @@ public interface FileMapper {
             @Result(column = "file_data", property = "fileData"),
             @Result(column = "user_id", property = "userId")
     })
-    List<File> findAll();
+    List<File> findAll(int userId);
 
     @Select("SELECT * FROM files WHERE file_id = #{fileId}")
     @Results(value = {

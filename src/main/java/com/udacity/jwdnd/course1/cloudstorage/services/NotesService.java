@@ -22,8 +22,8 @@ public class NotesService {
         notesMapper.update(note);
     }
 
-    public List<Note> getNotes() {
-        return notesMapper.findALlByOrderByNoteIdAsc();
+    public List<Note> getNotes(int userId) {
+        return notesMapper.findALlByOrderByNoteIdAsc(userId);
     }
 
     public List<Note> findAllByNoteTitle(String noteTitle) {

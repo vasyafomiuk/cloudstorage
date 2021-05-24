@@ -3,11 +3,14 @@ package com.udacity.jwdnd.course1.cloudstorage.controllers;
 import com.udacity.jwdnd.course1.cloudstorage.forms.CredentialsForm;
 import com.udacity.jwdnd.course1.cloudstorage.forms.FileForm;
 import com.udacity.jwdnd.course1.cloudstorage.forms.NoteForm;
+import com.udacity.jwdnd.course1.cloudstorage.models.User;
 import com.udacity.jwdnd.course1.cloudstorage.services.CredentialsService;
 import com.udacity.jwdnd.course1.cloudstorage.services.FileService;
 import com.udacity.jwdnd.course1.cloudstorage.services.NotesService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.AuthenticatedPrincipal;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,13 +29,13 @@ public class HomeController {
     }
 
     @GetMapping("/home")
-    public String getHome(CredentialsForm credentialsForm, NoteForm noteForm, Model model) {
+    public String getHome(@AuthenticationPrincipal User user, Model model) {
         model.addAttribute("credentialsForm", new CredentialsForm());
         model.addAttribute("noteForm", new NoteForm());
         model.addAttribute("fileForm", new FileForm());
-        model.addAttribute("files", fileService.getFiles());
-        model.addAttribute("credentials", credentialsService.getCredentials());
-        model.addAttribute("notes", notesService.getNotes());
+        model.addAttribute("files", fileService.getFiles(user.getUserId()));
+        model.addAttribute("credentials", credentialsService.getCredentials(user.getUserId()));
+        model.addAttribute("notes", notesService.getNotes(user.getUserId()));
         return "home";
     }
 
