@@ -73,9 +73,9 @@ class CloudStorageApplicationTests {
     @Order(0)
     @DisplayName("Signs up a new user, logs in, verifies that the home page is accessible, logs out, and verifies that the home page is no longer accessible.")
     public void asignUpAndLogout() throws InterruptedException {
-        String firstName = "Mark";
-        String lastName = "Twen";
-        String username = "mtwen";
+        String firstName = "Like";
+        String lastName = "Ramen";
+        String username = "ramen";
         String password = "user1234567";
 
         User user = userService.getUser(username);
@@ -91,7 +91,7 @@ class CloudStorageApplicationTests {
         driver.findElement(By.id("inputUsername")).sendKeys(username);
         driver.findElement(By.id("inputPassword")).sendKeys(password, Keys.ENTER);
 
-        driver.findElement(By.linkText("Back to Login")).click();
+        Thread.sleep(2000);
 
         driver.findElement(By.id("inputUsername")).sendKeys(username);
         driver.findElement(By.id("inputPassword")).sendKeys(password, Keys.ENTER);
@@ -102,6 +102,7 @@ class CloudStorageApplicationTests {
 
         driver.findElement(By.xpath("//*[text()='Logout']")).click();
 
+        Thread.sleep(2000);
         driver.get("http://localhost:" + this.port + "/home");
         Assertions.assertNotEquals("Home", driver.getTitle());
         Assertions.assertEquals("Login", driver.getTitle());
@@ -238,7 +239,7 @@ class CloudStorageApplicationTests {
         String noteTitle = "Selenium Notes";
         String noteDescription = "some random description";
 
-        List<Note> noteList = notesService.findAllByNoteTitle(noteTitle);
+        List<Note> noteList = notesService.findAllNotes();
         noteList.forEach(n -> notesService.delete(n.getNoteId()));
 
         User user = userService.getUser(username);
@@ -280,7 +281,7 @@ class CloudStorageApplicationTests {
 
         List<WebElement> notesTitle = driver.findElements(By.xpath("//td[text()='" + noteTitle + "']"));
         List<WebElement> notesDescription = driver.findElements(By.xpath("//td[text()='" + noteDescription + "']"));
-        Thread.sleep(1000);
+        Thread.sleep(3000);
 
         Assertions.assertEquals(0, notesTitle.size());
         Assertions.assertEquals(0, notesDescription.size());

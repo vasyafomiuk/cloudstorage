@@ -26,6 +26,10 @@ public class NotesService {
         return notesMapper.findALlByOrderByNoteIdAsc(userId);
     }
 
+    public List<Note> findAllNotes() {
+        return notesMapper.findALlNotes();
+    }
+
     public List<Note> findAllByNoteTitle(String noteTitle) {
         return notesMapper.findALlByNoteTitleOrderByNoteIdAsc(noteTitle);
     }
