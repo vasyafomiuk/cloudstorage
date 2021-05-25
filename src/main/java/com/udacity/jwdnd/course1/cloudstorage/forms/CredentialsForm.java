@@ -12,4 +12,7 @@ public class CredentialsForm {
     private String url;
     private String username;
     private String password;
+    private int userId;
+    private String key;
+    private String decryptedPassword;
 }

@@ -1,9 +1,11 @@
 package com.udacity.jwdnd.course1.cloudstorage.services;
 
+import com.udacity.jwdnd.course1.cloudstorage.forms.CredentialsForm;
 import com.udacity.jwdnd.course1.cloudstorage.mappers.CredentialsMapper;
 import com.udacity.jwdnd.course1.cloudstorage.models.Credential;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,10 +18,21 @@ public class CredentialsService {
         this.encryptionService = encryptionService;
     }
 
-    public List<Credential> getCredentials(int userId) {
+    public List<CredentialsForm> getCredentials(int userId) {
         List<Credential> credentialList = credentialsMapper.findAll(userId);
-        credentialList.forEach(credential -> credential.setPassword(encryptionService.decryptValue(credential.getPassword(), credential.getKey())));
-        return credentialList;
+        List<CredentialsForm> credentialsFormList = new ArrayList<>();
+        credentialList.forEach(credential -> {
+            String decryptedPassword = encryptionService.decryptValue(credential.getPassword(), credential.getKey());
+            CredentialsForm credentialsForm = new CredentialsForm();
+            credentialsForm.setCredentialId(credential.getCredentialId());
+            credentialsForm.setKey(credential.getKey());
+            credentialsForm.setPassword(credential.getPassword());
+            credentialsForm.setUrl(credential.getUrl());
+            credentialsForm.setDecryptedPassword(decryptedPassword);
+            credentialsForm.setUsername(credential.getUsername());
+            credentialsFormList.add(credentialsForm);
+        });
+        return credentialsFormList;
     }
 
     public int insertCredentials(Credential credential) {
